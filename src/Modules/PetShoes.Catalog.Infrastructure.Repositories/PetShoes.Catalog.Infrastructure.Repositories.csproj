@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Marraia.MongoDb" Version="1.1.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PetShoes.Catalog.Domain\PetShoes.Catalog.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

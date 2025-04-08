@@ -15,4 +15,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Modules\PetShoes.Catalog.Infrastructure.IoC\PetShoes.Catalog.Infrastructure.IoC.csproj" />
+  </ItemGroup>
+
 </Project>
