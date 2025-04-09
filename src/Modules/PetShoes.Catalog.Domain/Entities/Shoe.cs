@@ -34,15 +34,14 @@ namespace PetShoes.Catalog.Domain.Entities
                           string description,
                           decimal price,
                           string imageUrl,
-                          List<int> sizes,
-                          DateTime updatedAt)
+                          List<int> sizes)
         {
             Name = name;
             Description = description;
             Price = price;
             ImageUrl = imageUrl;
             Sizes = sizes;
-            UpdatedAt = updatedAt;
+            UpdatedAt = DateTime.Now;
         }
         public void UpdatePrice(decimal price)
         {

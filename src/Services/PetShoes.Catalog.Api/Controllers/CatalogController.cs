@@ -14,6 +14,29 @@ namespace PetShoes.Catalog.Api.Controllers
         {
             _shoeAppService = shoeAppService;
         }
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetAsync(Guid itemCatalogId)
+        {
+            var itemCatalog = await _shoeAppService
+                                            .GetShoeByIdAsync(itemCatalogId)
+                                            .ConfigureAwait(false);
+            return Ok(itemCatalog);
+        }
+        //[HttpGet]
+        //[ProducesResponseType(200)]
+        //[ProducesResponseType(400)]
+        //[ProducesResponseType(500)]
+        //public async Task<IActionResult> GetAllAsync()
+        //{
+        //    var itemCatalog = await _shoeAppService
+        //                                    .GetAllAsync()
+        //                                    .ConfigureAwait(false);
+
+        //    return Ok(itemCatalog);
+        //}
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -21,10 +44,35 @@ namespace PetShoes.Catalog.Api.Controllers
         public async Task<IActionResult> PostAsync([FromBody] ShoeInput shoeInput)
         {
             var itemCatalog = await _shoeAppService
-                                        .InsertAsync(shoeInput)
-                                        .ConfigureAwait(false);
+                                            .InsertAsync(shoeInput)
+                                            .ConfigureAwait(false);
 
             return Ok(itemCatalog);
+        }
+
+        [HttpPut]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> PutAsync(Guid itemCatalogId, [FromBody] ShoeInput shoeInput)
+        {
+            var itemCatalog = await _shoeAppService
+                                            .UpdateAsync(itemCatalogId, shoeInput)
+                                            .ConfigureAwait(false);
+
+            return Ok(itemCatalog);
+        }
+        [HttpDelete]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> DeleteAsync(Guid itemCatalogId) //TODO :: VERIFICAR SE ESTÁ DELETANDO
+        {
+            await _shoeAppService
+                        .DeleteAsync(itemCatalogId)
+                        .ConfigureAwait(false);
+
+            return Ok();
         }
     }
 }
