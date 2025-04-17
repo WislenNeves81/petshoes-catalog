@@ -1,4 +1,6 @@
-﻿namespace PetShoes.Catalog.Application.AppShoe.Input
+﻿using PetShoes.Catalog.Domain.Entities;
+
+namespace PetShoes.Catalog.Application.AppShoe.Input
 {
     public class ShoeInput
     {
@@ -7,7 +9,7 @@
                         string brand,
                         decimal price,
                         string imageUrl,
-                        List<int> sizes)
+                        List<ShoeSizeInput> sizes)
         {
             Name = name;
             Description = description;
@@ -21,7 +23,19 @@
         public string Brand { get; set; }
         public decimal Price { get; set; }
         public string ImageUrl { get; set; }
-        public List<int> Sizes { get; set; }
+        public List<ShoeSizeInput> Sizes { get; private set; }
+
+        public class ShoeSizeInput
+        {
+            public int Size { get; set; }
+            public int Quantity { get; set; }
+
+            public ShoeSizeInput(int size, int quantity)
+            {
+                Size = size;
+                Quantity = quantity;
+            }
+        }
 
     }
 }

@@ -29,7 +29,7 @@ namespace PetShoes.Catalog.Api.Controllers
         //[ProducesResponseType(200)]
         //[ProducesResponseType(400)]
         //[ProducesResponseType(500)]
-        //public async Task<IActionResult> GetAllAsync()
+        //public async Task<IActionResult> GetAllAsync() //COMO CRIAR MAIS DE UM GET NA ROTA?
         //{
         //    var itemCatalog = await _shoeAppService
         //                                    .GetAllAsync()
@@ -66,7 +66,7 @@ namespace PetShoes.Catalog.Api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> DeleteAsync(Guid itemCatalogId) //TODO :: VERIFICAR SE ESTÁ DELETANDO
+        public async Task<IActionResult> DeleteAsync(Guid itemCatalogId) 
         {
             await _shoeAppService
                         .DeleteAsync(itemCatalogId)

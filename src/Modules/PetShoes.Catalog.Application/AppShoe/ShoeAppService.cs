@@ -22,7 +22,7 @@ namespace PetShoes.Catalog.Application.AppShoe
                                 shoeInput.Brand,
                                 shoeInput.Price,
                                 shoeInput.ImageUrl,
-                                shoeInput.Sizes);
+                                shoeInput.Sizes.Select(sizeInput => new ShoeSize(sizeInput.Size, sizeInput.Quantity)).ToList());
 
             await _shoeRepository
                         .InsertAsync(shoe)
@@ -58,26 +58,29 @@ namespace PetShoes.Catalog.Application.AppShoe
         }
         public async Task<ShoeViewModel> UpdateAsync(Guid itemCatalogId, ShoeInput shoeInput)
         {
-
             var itemCatalog = await _shoeRepository
-                                            .GetShoeByIdAsync(itemCatalogId)
-                                            .ConfigureAwait(false);
-            
+                                        .GetShoeByIdAsync(itemCatalogId)
+                                        .ConfigureAwait(false);
+
             if (itemCatalog == null)
                 throw new Exception("Produto não encontrado");
+
+            
+            var shoeSizes = shoeInput.Sizes
+                                     .Select(sizeInput => new ShoeSize(sizeInput.Size, sizeInput.Quantity))
+                                     .ToList();
 
             itemCatalog.Update(shoeInput.Description,
                                shoeInput.Brand,
                                shoeInput.Price,
                                shoeInput.ImageUrl,
-                               shoeInput.Sizes);
+                               shoeSizes);
 
             await _shoeRepository
-                            .UpdateAsync(itemCatalog)
-                            .ConfigureAwait(false);
+                        .UpdateAsync(itemCatalog)
+                        .ConfigureAwait(false);
 
             return itemCatalog.ToViewModel();
-
         }
 
         public async Task DeleteAsync(Guid itemCatalogId)
