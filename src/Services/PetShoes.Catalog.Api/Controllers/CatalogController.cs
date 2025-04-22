@@ -25,18 +25,7 @@ namespace PetShoes.Catalog.Api.Controllers
                                             .ConfigureAwait(false);
             return Ok(itemCatalog);
         }
-        //[HttpGet]
-        //[ProducesResponseType(200)]
-        //[ProducesResponseType(400)]
-        //[ProducesResponseType(500)]
-        //public async Task<IActionResult> GetAllAsync() //COMO CRIAR MAIS DE UM GET NA ROTA?
-        //{
-        //    var itemCatalog = await _shoeAppService
-        //                                    .GetAllAsync()
-        //                                    .ConfigureAwait(false);
-
-        //    return Ok(itemCatalog);
-        //}
+        
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]

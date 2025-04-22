@@ -1,7 +1,9 @@
-﻿using PetShoes.Catalog.Application.AppShoe.Input;
+﻿using MyProfit.Foundation.Redis.Repositories.Interfaces;
+using PetShoes.Catalog.Application.AppShoe.Input;
 using PetShoes.Catalog.Application.AppShoe.Interface;
 using PetShoes.Catalog.Application.AppShoe.Mapping;
 using PetShoes.Catalog.Application.AppShoe.ViewModel;
+using PetShoes.Catalog.Domain.Common;
 using PetShoes.Catalog.Domain.Entities;
 using PetShoes.Catalog.Domain.Interfaces;
 
@@ -10,13 +12,20 @@ namespace PetShoes.Catalog.Application.AppShoe
     public class ShoeAppService : IShoeAppService
     {
         private readonly IShoeRepository _shoeRepository;
-        public ShoeAppService(IShoeRepository shoeRepository)
+        private readonly ICacheRepository _cacheRepository;
+        public ShoeAppService(IShoeRepository shoeRepository,
+                                ICacheRepository cacheRepository)
         {
             _shoeRepository = shoeRepository;
+            _cacheRepository = cacheRepository;
+
         }
       
         public async Task<ShoeViewModel> InsertAsync(ShoeInput shoeInput)
         {
+            
+
+
             var shoe = new Shoe(shoeInput.Name,
                                 shoeInput.Description,
                                 shoeInput.Brand,
@@ -28,7 +37,15 @@ namespace PetShoes.Catalog.Application.AppShoe
                         .InsertAsync(shoe)
                         .ConfigureAwait(false);
 
-            return shoe.ToViewModel();
+            var shoeViewModel = shoe.ToViewModel();
+
+            var keyShoeCatalog = $"{shoe.Id} - {shoe.Brand}";
+
+            await _cacheRepository
+                     .InsertAsync<ShoeViewModel>(keyShoeCatalog, shoeViewModel, Constants.TenMinutesInSeconds)
+                     .ConfigureAwait(false);
+
+            return shoeViewModel;
         }
 
         public async Task<ShoeViewModel> GetShoeByIdAsync(Guid itemCatalogId)
