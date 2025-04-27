@@ -10,16 +10,10 @@ namespace PetShoes.Catalog.Application.AppShoe.Mapping
             return new ShoeViewModel
             {
                 Id = shoe.Id,
-                Name = shoe.Name,
+                Model = shoe.Model,
                 Description = shoe.Description,
                 Brand = shoe.Brand,
-                Price = shoe.Price,
                 ImageUrl = shoe.ImageUrl,
-                Sizes = shoe.Sizes?.Select(size => new ShoeSizeViewModel
-                {
-                    Size = size.Size,
-                    Quantity = size.Quantity
-                }).ToList() ?? new List<ShoeSizeViewModel>(),
                 CreatedAt = shoe.CreatedAt
             };
         }

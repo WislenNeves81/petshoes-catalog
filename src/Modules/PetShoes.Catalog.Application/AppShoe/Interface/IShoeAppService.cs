@@ -10,7 +10,5 @@ namespace PetShoes.Catalog.Application.AppShoe.Interface
         Task<List<ShoeViewModel>> GetAllAsync();
         Task<ShoeViewModel> UpdateAsync(Guid id, ShoeInput shoeInput);
         Task DeleteAsync(Guid id);
-
-
     }
 }
