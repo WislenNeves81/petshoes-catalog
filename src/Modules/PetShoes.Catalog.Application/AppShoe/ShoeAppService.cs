@@ -29,12 +29,16 @@ namespace PetShoes.Catalog.Application.AppShoe
                                 shoeInput.Brand,
                                 shoeInput.ImageUrl);
 
+            await _shoeRepository
+                        .GetShoeByModelAsync(shoeInput.Model)
+                        .ConfigureAwait(false);
 
-
+            if (shoe is not null)
+                return default!;
 
             await _shoeRepository
-                        .InsertAsync(shoe)
-                        .ConfigureAwait(false);
+                    .InsertAsync(shoe)
+                    .ConfigureAwait(false);
 
             var shoeViewModel = shoe.ToViewModel();
 

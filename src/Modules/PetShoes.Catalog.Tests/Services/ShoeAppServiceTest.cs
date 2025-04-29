@@ -1,6 +1,6 @@
 ﻿using Bogus;
-using Castle.Core.Resource;
 using FluentAssertions;
+using MyProfit.Foundation.Redis.Repositories.Interfaces;
 using NSubstitute;
 using PetShoes.Catalog.Application.AppShoe;
 using PetShoes.Catalog.Application.AppShoe.Input;
@@ -21,7 +21,8 @@ namespace PetShoes.Catalog.Tests.Services.Generate
         public ShoeAppServiceTest()
         {
             _shoeRepository = Substitute.For<IShoeRepository>();
-            _shoeAppService = new ShoeAppService(_shoeRepository, null);
+            var cacheRepositoryMock = Substitute.For<ICacheRepository>();
+            _shoeAppService = new ShoeAppService(_shoeRepository, cacheRepositoryMock);
 
             _faker = new Faker();
         }
@@ -62,10 +63,10 @@ namespace PetShoes.Catalog.Tests.Services.Generate
         [Fact]
         public async Task InsertShoeAsync_When_Model_Exists()
         {
-            //Arrange
+            // Arrange  
             var shoeId = _faker.Random.Guid();
             var shoe = GenerateFakerShoe.CreateShoeObject(shoeId);
-            
+
             var shoeInput = new ShoeInput()
             {
                 Model = shoe.Model,
@@ -73,17 +74,17 @@ namespace PetShoes.Catalog.Tests.Services.Generate
                 Brand = shoe.Brand,
                 ImageUrl = shoe.ImageUrl
             };
-            
-            _shoeRepository.GetShoeByModelAsync(Arg.Any<string>()).Returns(shoe);
-            
-            //Act
-            var result = await _shoeAppService.InsertAsync(shoeInput);
-            
-            //Assert
-            result.Should().NotBeNull();
 
-            //ADD REDIS
-            
+            var keyShoeCatalog = $"Catalog :: ID: {shoe.Id} - BRAND: {shoe.Brand}";
+
+            _shoeRepository.GetShoeByModelAsync(Arg.Any<string>()).Returns(shoe);
+
+            // Act  
+            var result = await _shoeAppService.InsertAsync(shoeInput);
+
+            // Assert  
+            result.Should().BeNull();
+
             await _shoeRepository
                     .Received(defaultReceived)
                     .GetShoeByModelAsync(Arg.Any<string>());
