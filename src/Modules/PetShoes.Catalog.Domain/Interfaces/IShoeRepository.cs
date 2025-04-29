@@ -6,7 +6,7 @@ namespace PetShoes.Catalog.Domain.Interfaces
     {
         Task InsertAsync(Shoe shoe);
         Task<Shoe> GetShoeByIdAsync(Guid itemCatalogId);
-        Task<List<Shoe>> GetAllAsync();
+        Task<Shoe> GetShoeByModelAsync(string model);
         Task<Shoe> UpdateAsync(Shoe itemCatalog);
         Task DeleteAsync(Guid itemCatalogId);
 

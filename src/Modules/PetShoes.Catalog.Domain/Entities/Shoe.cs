@@ -4,8 +4,8 @@ namespace PetShoes.Catalog.Domain.Entities
 {
     public class Shoe : Entity<Guid>
     {
-        private List<int> sizes;
 
+        public Shoe(){}
         public Shoe(string brand,
                     string model,
                     string description,

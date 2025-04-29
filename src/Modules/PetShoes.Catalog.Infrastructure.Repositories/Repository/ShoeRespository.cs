@@ -24,12 +24,12 @@ namespace PetShoes.Catalog.Infrastructure.Repositories.Repository
                             .Where(item => item.Id == itemCatalogId && item.Active == true)
                             .FirstOrDefaultAsync();
         }
-        public async Task<List<Shoe>> GetAllAsync()
+        public async Task<Shoe> GetShoeByModelAsync(string model)
         {
             return await Collection
                             .AsQueryable()
-                            .Where(item => item.Active == true)
-                            .ToListAsync();
+                            .Where(item => item.Model == model && item.Active == true)
+                            .FirstOrDefaultAsync();
         }
         public async Task<Shoe> UpdateAsync(Shoe itemCatalog)
         {

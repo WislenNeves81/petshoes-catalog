@@ -1,4 +1,5 @@
-﻿using MyProfit.Foundation.Redis.Repositories.Interfaces;
+﻿using MongoDB.Driver;
+using MyProfit.Foundation.Redis.Repositories.Interfaces;
 using PetShoes.Catalog.Application.AppShoe.Input;
 using PetShoes.Catalog.Application.AppShoe.Interface;
 using PetShoes.Catalog.Application.AppShoe.Mapping;
@@ -28,13 +29,16 @@ namespace PetShoes.Catalog.Application.AppShoe
                                 shoeInput.Brand,
                                 shoeInput.ImageUrl);
 
+
+
+
             await _shoeRepository
                         .InsertAsync(shoe)
                         .ConfigureAwait(false);
 
             var shoeViewModel = shoe.ToViewModel();
 
-            var keyShoeCatalog = $"{shoe.Id} - {shoe.Brand}";
+            var keyShoeCatalog = $"Catalog :: ID: {shoe.Id} - BRAND: {shoe.Brand}";
 
             await _cacheRepository
                      .InsertAsync<ShoeViewModel>(keyShoeCatalog, shoeViewModel)
@@ -48,25 +52,21 @@ namespace PetShoes.Catalog.Application.AppShoe
             var shoe = await _shoeRepository
                                     .GetShoeByIdAsync(itemCatalogId)
                                     .ConfigureAwait(false);
-            if (shoe == null)
-                throw new Exception("Produto não encontrado");
+            if (shoe is null)
+                return default!;
 
             return shoe.ToViewModel();
         }
 
-        public async Task<List<ShoeViewModel>> GetAllAsync()
+        public async Task<ShoeViewModel> GetShoeByModelAsync(string model)
         {
             var shoe = await _shoeRepository
-                                    .GetAllAsync()
+                                    .GetShoeByModelAsync(model)
                                     .ConfigureAwait(false);
-            if (shoe == null)
-                throw new Exception("Produto não encontrado");
+            if (shoe is null)
+                return default!;
             
-            var shoeViewModel = new List<ShoeViewModel>();
-            
-            shoeViewModel = shoe.Select(x => x.ToViewModel()).ToList();
-            
-            return shoeViewModel;
+            return shoe.ToViewModel(); 
         }
         public async Task<ShoeViewModel> UpdateAsync(Guid itemCatalogId, ShoeInput shoeInput)
         {

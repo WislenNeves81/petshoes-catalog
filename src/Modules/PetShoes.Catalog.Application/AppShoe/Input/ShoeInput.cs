@@ -4,6 +4,7 @@ namespace PetShoes.Catalog.Application.AppShoe.Input
 {
     public class ShoeInput
     {
+        public ShoeInput(){}
         public ShoeInput(string model,
                         string description,
                         string brand,
