@@ -75,8 +75,6 @@ namespace PetShoes.Catalog.Tests.Services.Generate
                 ImageUrl = shoe.ImageUrl
             };
 
-            var keyShoeCatalog = $"Catalog :: ID: {shoe.Id} - BRAND: {shoe.Brand}";
-
             _shoeRepository.GetShoeByModelAsync(Arg.Any<string>()).Returns(shoe);
 
             // Act  

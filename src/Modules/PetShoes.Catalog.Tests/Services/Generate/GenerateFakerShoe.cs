@@ -1,7 +1,5 @@
 ﻿using Bogus;
-using PetShoes.Catalog.Application.AppShoe;
 using PetShoes.Catalog.Domain.Entities;
-using PetShoes.Catalog.Domain.Interfaces;
 
 namespace PetShoes.Catalog.Tests.Services.Generate
 {
