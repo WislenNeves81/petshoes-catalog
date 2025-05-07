@@ -16,6 +16,8 @@ namespace PetShoes.Catalog.Tests.Services.Generate
                                 .RuleFor(c => c.Brand, faker => faker.Commerce.ProductAdjective())
                                 .RuleFor(c => c.Model, faker => faker.Commerce.ProductName())
                                 .RuleFor(c => c.Description, faker => faker.Lorem.Paragraphs(IntEight))
+                                .RuleFor(c => c.Price, faker => faker.Random.Double(0, 100))
+                                .RuleFor(c => c.Color, faker => faker.Commerce.Color())
                                 .RuleFor(c => c.ImageUrl, faker => faker.Internet.Avatar())
                                 .RuleFor(c => c.Active, faker => faker.Random.Bool())
                                 .RuleFor(c => c.CreatedAt, faker => faker.Date.Past())

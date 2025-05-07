@@ -12,6 +12,8 @@ namespace PetShoes.Catalog.Application.AppShoe.Mapping
                 Id = shoe.Id,
                 Model = shoe.Model,
                 Description = shoe.Description,
+                Price = shoe.Price,
+                Color = shoe.Color,
                 Brand = shoe.Brand,
                 ImageUrl = shoe.ImageUrl,
                 CreatedAt = shoe.CreatedAt

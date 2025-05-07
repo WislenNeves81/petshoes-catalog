@@ -1,5 +1,4 @@
-﻿using MongoDB.Driver;
-using MyProfit.Foundation.Redis.Repositories.Interfaces;
+﻿using MyProfit.Foundation.Redis.Repositories.Interfaces;
 using PetShoes.Catalog.Application.AppShoe.Input;
 using PetShoes.Catalog.Application.AppShoe.Interface;
 using PetShoes.Catalog.Application.AppShoe.Mapping;
@@ -27,13 +26,15 @@ namespace PetShoes.Catalog.Application.AppShoe
             var shoe = new Shoe(shoeInput.Model,
                                 shoeInput.Description,
                                 shoeInput.Brand,
+                                shoeInput.Price,
+                                shoeInput.Color,
                                 shoeInput.ImageUrl);
 
-            await _shoeRepository
-                        .GetShoeByModelAsync(shoeInput.Model)
-                        .ConfigureAwait(false);
+            var shoeExist = await _shoeRepository
+                                        .GetShoeByModelAsync(shoeInput.Model)
+                                        .ConfigureAwait(false);
 
-            if (shoe is not null)
+            if (shoeExist is not null)
                 return default!;
 
             await _shoeRepository
@@ -83,6 +84,8 @@ namespace PetShoes.Catalog.Application.AppShoe
 
             itemCatalog.Update(shoeInput.Description,
                                shoeInput.Brand,
+                               shoeInput.Price,
+                               shoeInput.Color,
                                shoeInput.ImageUrl);
 
             await _shoeRepository

@@ -72,6 +72,8 @@ namespace PetShoes.Catalog.Tests.Services.Generate
                 Model = shoe.Model,
                 Description = shoe.Description,
                 Brand = shoe.Brand,
+                Price = shoe.Price,
+                Color = shoe.Color,
                 ImageUrl = shoe.ImageUrl
             };
 
